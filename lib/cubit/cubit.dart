@@ -10,15 +10,13 @@ import '../modules/user.dart';
 class UserCubit extends Cubit<dynamic>
 {
   final String url = 'https://gorest.co.in/public/v2/users';
-  List<User> users =[];
+  static List<User> users =[];
   UserCubit() : super(UserListLoading());
-
-  //UserCubit({required this.url}) : super(UserListLoading());
+  static UserCubit get(context) => BlocProvider.of(context);
   Future<void>DisplayUsers()async{
     emit(UserListLoading());
    try{
      List<dynamic> data = await Api().get(url: url) ;
-
      data.forEach((element) {
        User user = User(
          id : element['id'],
@@ -27,23 +25,8 @@ class UserCubit extends Cubit<dynamic>
          email: element['email'],
          status: element['status'],
        );
-       users.add(user);
+     users.add(user);
      });
-     /*data.forEach((key, value){
-       User user = User(
-         id : value['id'],
-         name: value['name'],
-         gender: value['gender'],
-         email: value['email'],
-         status: value['status'],
-       );
-       users.add(user);
-     });*/
-     /*print(users.length);
-     users.forEach((element) {
-       print("hello");
-       print(element.name);
-     });*/
      emit(UserListLoaded());
    }catch (e){
      emit(UserListError(e.toString()));
@@ -53,11 +36,7 @@ class UserCubit extends Cubit<dynamic>
   Future<void> CreateUser(Map<String,dynamic> body) async{
     emit(UserFormEmpty());
     try{
-      print('Request Body: $body');
       Map<String,dynamic> data = await Api().post(url: url, body: json.encode(body));
-      //Map<String, dynamic> userData = data['data'];
-      //print('Response userData: $userData');
-      print('Response Data: $data');
       User user = User(
         id: data['id'],
         name: data['name'],
@@ -65,20 +44,27 @@ class UserCubit extends Cubit<dynamic>
         email: data['gender'],
         status: data['status'],
       );
-      print(users.length);
       users.add(user);
-      print(users.length);
-      emit(UserListLoaded());
       emit(UserFormSuccess());
     }catch (e){
       emit(UserFormError(e.toString()));
     }
   }
 
-  Future<void> UpdateUser(Map<String,dynamic> body) async{
-    emit(UserFormEmpty());
+  Future<void> UpdateUser(Map<String,dynamic> body,int id) async{
+    String newUrl = url + '/' + id.toString();
     try{
-      Map<String,dynamic> data = await Api().put(url: url, body: json.encode(body));
+      Map<String,dynamic> data = await Api().put(url: newUrl, body: json.encode(body));
+      emit(UserFormSuccess());
+    }catch (e){
+      emit(UserFormError(e.toString()));
+    }
+  }
+
+  Future<void> DeleteUser(int id) async{
+    String newUrl = url + '/' + id.toString();
+    try{
+      dynamic data = await Api().delete(url: newUrl);
       emit(UserFormSuccess());
     }catch (e){
       emit(UserFormError(e.toString()));

@@ -22,10 +22,11 @@ class CreateUser extends StatelessWidget {
       listener: (context,state){
         if(state is UserFormSuccess)
         {
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-                builder: (context) => Home()),
+              builder: (context) => Home(),
+            ),
           );
         }
         else if(state is UserFormError) {
@@ -47,8 +48,8 @@ class CreateUser extends StatelessWidget {
           );
         }
       },
-      builder:(context,state) =>
-          Scaffold(
+      builder:(context,state) {
+          return Scaffold(
             body: SingleChildScrollView(
               child: Column(
                 children: [
@@ -178,6 +179,7 @@ class CreateUser extends StatelessWidget {
                             onSaved: (val) {
                               status = val;
                             },
+
                             decoration: InputDecoration(
                               prefixIconColor: Colors.black,
                               hintText: 'status',
@@ -230,7 +232,8 @@ class CreateUser extends StatelessWidget {
                 ],
               ),
             ),
-          ),
+          );
+      }
     );
   }
 }

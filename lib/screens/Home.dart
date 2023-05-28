@@ -13,8 +13,7 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userCubit = BlocProvider.of<UserCubit>(context);
-    userCubit.DisplayUsers();
+    UserCubit.get(context).DisplayUsers();
     bool? loading;
     return BlocConsumer<UserCubit,dynamic>(
       listener: (context,state){
@@ -40,8 +39,6 @@ class Home extends StatelessWidget {
       },
       builder: (context,state)  {
         loading = state is UserListLoading;
-        //print(userCubit.users.length);
-        //userCubit.CreateUser({"name":"ahmed", "gender":"male", "email":"ahmed@15ce.com", "status":"active"});
         return Scaffold(
         appBar: AppBar(
           title: Text(
@@ -50,14 +47,6 @@ class Home extends StatelessWidget {
         ),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
-              /*
-              final body = {
-                "name": "Jojy Doe",
-                "gender": "male",
-                "email": "jojy.doe@example.com",
-                "status": "active"
-              };
-              userCubit.UpdateUser(body);*/
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -70,9 +59,9 @@ class Home extends StatelessWidget {
           body: loading! ? Center(
           child : CircularProgressIndicator()
           ):ListView.builder(
-              itemCount: userCubit.users.length,
+              itemCount: UserCubit.users.length,
               itemBuilder: (context,idx){
-                User user = userCubit.users[idx];
+                User user = UserCubit.users[idx];
                 return ListTile(
                   title: Text(user.name),
                   subtitle: Text(user.email),

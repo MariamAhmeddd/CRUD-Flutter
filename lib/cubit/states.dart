@@ -11,7 +11,6 @@ class UserListError extends UserListStates {
 
 abstract class UserFormStates {}
 class UserFormEmpty extends UserFormStates {}
-class UserFormLoading extends UserFormStates {} //when I press edit button
 class UserFormSuccess extends UserFormStates {}
 class UserFormError extends UserFormStates {
   final String error;

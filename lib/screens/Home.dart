@@ -33,9 +33,7 @@ class Home extends StatelessWidget {
                 ],
               );
         });
-      }else if(state == UserListLoaded){
-          loading = !loading!;
-        }
+      }
       },
       builder: (context,state)  {
         loading = state is UserListLoading;
@@ -59,10 +57,11 @@ class Home extends StatelessWidget {
           body: loading! ? Center(
           child : CircularProgressIndicator()
           ):ListView.builder(
-              itemCount: UserCubit.users.length,
+              itemCount: UserCubit.get(context).users.length,
               itemBuilder: (context,idx){
-                User user = UserCubit.users[idx];
-                return ListTile(
+                User user = UserCubit.get(context).users[idx];
+               {
+                 return ListTile(
                   title: Text(user.name),
                   subtitle: Text(user.email),
                   onTap: () {
@@ -74,7 +73,7 @@ class Home extends StatelessWidget {
                     );
                   },
                 );
-              }
+              }}
           ),
       );
         },

@@ -10,10 +10,11 @@ import '../modules/user.dart';
 class UserCubit extends Cubit<dynamic>
 {
   final String url = 'https://gorest.co.in/public/v2/users';
-  static List<User> users =[];
+  List<User> users =[];
   UserCubit() : super(UserListLoading());
   static UserCubit get(context) => BlocProvider.of(context);
   Future<void>DisplayUsers()async{
+    users.clear();
     emit(UserListLoading());
    try{
      List<dynamic> data = await Api().get(url: url) ;

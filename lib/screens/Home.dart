@@ -15,34 +15,32 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     UserCubit.get(context).DisplayUsers();
     bool? loading;
-    return BlocConsumer<UserCubit,dynamic>(
-      listener: (context,state){
-        if(state == UserListError){
+    return BlocConsumer<UserCubit, dynamic>(
+      listener: (context, state) {
+        if (state == UserListError) {
           String error = state.error;
           showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                title: Text('Error'),
-                content: Text('$error.'),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: Text('OK'),
-                  ),
-                ],
-              );
-        });
-      }
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  title: Text('Error'),
+                  content: Text('$error.'),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: Text('OK'),
+                    ),
+                  ],
+                );
+              });
+        }
       },
-      builder: (context,state)  {
+      builder: (context, state) {
         loading = state is UserListLoading;
         return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'Users'
+          appBar: AppBar(
+            title: Text('Users'),
           ),
-        ),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
               Navigator.push(
@@ -54,29 +52,29 @@ class Home extends StatelessWidget {
             },
             child: Icon(Icons.add),
           ),
-          body: loading! ? Center(
-          child : CircularProgressIndicator()
-          ):ListView.builder(
-              itemCount: UserCubit.get(context).users.length,
-              itemBuilder: (context,idx){
-                User user = UserCubit.get(context).users[idx];
-               {
-                 return ListTile(
-                  title: Text(user.name),
-                  subtitle: Text(user.email),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => UserDetails(user: user),
-                      ),
-                    );
-                  },
-                );
-              }}
-          ),
-      );
-        },
+          body: loading!
+              ? Center(child: CircularProgressIndicator())
+              : ListView.builder(
+                  itemCount: UserCubit.get(context).users.length,
+                  itemBuilder: (context, idx) {
+                    User user = UserCubit.get(context).users[idx];
+                    {
+                      return ListTile(
+                        title: Text(user.name),
+                        subtitle: Text(user.email),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => UserDetails(user: user),
+                            ),
+                          );
+                        },
+                      );
+                    }
+                  }),
+        );
+      },
     );
   }
 }

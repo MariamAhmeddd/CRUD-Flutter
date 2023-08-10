@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../cubit/cubit.dart';
 import '../cubit/states.dart';
 import 'Home.dart';
@@ -53,7 +53,11 @@ class CreateUser extends StatelessWidget {
             body: SingleChildScrollView(
               child: Column(
                 children: [
-                  SizedBox(height: 100,),
+                  SizedBox(
+                    //used MediaQuety
+                    height: MediaQuery.of(context).size.height/6,
+                    //height: 100,
+                    ),
                   Padding(
                     padding: const EdgeInsets.all(15.0) + EdgeInsets.only(top: 7),
                   ),
@@ -67,7 +71,9 @@ class CreateUser extends StatelessWidget {
                             'Create User',
                             style: TextStyle(
                                 fontWeight: FontWeight.w500,
-                                fontSize: 32,
+                                //fontSize: 32
+                                //used screenutil
+                                fontSize: 32.sp,
                                 color: Colors.black,
                                 fontFamily: ''),
                             textAlign: TextAlign.left,
@@ -107,7 +113,9 @@ class CreateUser extends StatelessWidget {
                             ),
                           ),
                           SizedBox(
-                            height: 20,
+                            //used MediaQuety
+                            height: MediaQuery.of(context).size.height/30,
+                            //height: 20,
                           ),
                           TextFormField(
                             validator: (String? value) {
@@ -135,7 +143,9 @@ class CreateUser extends StatelessWidget {
                             ),
                           ),
                           SizedBox(
-                            height: 20,
+                            //used MediaQuety
+                            height: MediaQuery.of(context).size.height/30,
+                            //height: 20,
                           ),
                           TextFormField(
                             validator: (String? value) {
@@ -163,7 +173,9 @@ class CreateUser extends StatelessWidget {
                             ),
                           ),
                           SizedBox(
-                            height: 20,
+                            //used MediaQuety
+                            height: MediaQuery.of(context).size.height/30,
+                            //height: 20,
                           ),
                           TextFormField(
                             validator: (String? value) {
@@ -192,7 +204,9 @@ class CreateUser extends StatelessWidget {
                             ),
                           ),
                           SizedBox(
-                            height: 20,
+                            //used MediaQuety
+                            height: MediaQuery.of(context).size.height/30,
+                            //height: 20,
                           ),
                           InkWell(
                             onTap: ()async {
@@ -213,7 +227,9 @@ class CreateUser extends StatelessWidget {
                               decoration: BoxDecoration(
                                 color: Colors.black,
                               ),
-                              height: 60,
+                              //used screenutil
+                              height: 60.w,
+                              //height: 60,
                               width: double.infinity,
                               child: Center(
                                   child: Text(
@@ -223,7 +239,9 @@ class CreateUser extends StatelessWidget {
                             ),
                           ),
                           SizedBox(
-                            height: 20,
+                            //used MediaQuety
+                            height: MediaQuery.of(context).size.height/30,
+                            //height: 20,
                           ),
                         ],
                       ),
